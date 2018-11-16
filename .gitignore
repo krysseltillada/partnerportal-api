@@ -26,3 +26,7 @@ mvnw
 /dist/
 /nbdist/
 /.nb-gradle/
+
+/api/target
+/common/target
+/portal/target
