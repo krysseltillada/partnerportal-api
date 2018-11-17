@@ -1,0 +1,51 @@
+<html xmlns:th="http://www.thymeleaf.org"
+    	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <body>
+        <th:block th:fragment="topbar">
+        	<nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
+			    <div class="container">
+			
+			      <!-- Brand -->
+			      <a class="navbar-brand" th:href="@{/}">
+			        <strong>PartnerPortal</strong>
+			      </a>
+			
+			      <!-- Collapse -->
+			      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+			        aria-expanded="false" aria-label="Toggle navigation">
+			        <span class="navbar-toggler-icon"></span>
+			      </button>
+			
+			      <!-- Links -->
+			      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+			
+			        <!-- Left -->
+			        <ul class="navbar-nav mr-auto">
+			          <li class="nav-item">
+			            <a class="nav-link" href="#">Documentation
+			            </a>
+			          </li>
+			          <li class="nav-item">
+			            <a class="nav-link" href="https://mdbootstrap.com/docs/jquery/" target="_blank">Get Started</a>
+			          </li>
+			          <li class="nav-item">
+			            <a class="nav-link" href="https://mdbootstrap.com/docs/jquery/getting-started/download/" target="_blank">Updates</a>
+			          </li>
+			        </ul>
+			
+			        <!-- Right -->
+			        <ul class="navbar-nav nav-flex-icons">
+			          <li class="nav-item">
+			            <a th:href="@{/signUp}" class="nav-link border border-light rounded">
+			              <i class="fa fa-user-plus mr-2"></i>Sign Up
+			            </a>
+			          </li>
+			        </ul>
+			
+			      </div>
+			
+			    </div>
+			  </nav>
+        </th:block>
+    </body>
+</html>

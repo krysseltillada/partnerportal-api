@@ -3,10 +3,15 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:fragment="javascriptFiles">
-        <script th:src="@{/vendor/jquery.min.js}"></script>
-        <script th:src="@{/templates/SemanticUI/components/form.js}"></script>
-        <script th:src="@{/templates/SemanticUI/components/transition.js}"></script>
-        <script th:src="@{/templates/SemanticUI/components/visibility.js}"></script>
+  		<script type="text/javascript" th:src="@{/templates/MDBootstrap/js/jquery-3.3.1.min.js}"></script>
+	  	<script type="text/javascript" th:src="@{/templates/MDBootstrap/js/popper.min.js}"></script>
+	  	<script type="text/javascript" th:src="@{/templates/MDBootstrap/js/bootstrap.min.js}"></script>
+	  	<script type="text/javascript" th:src="@{/templates/MDBootstrap/js/mdb.min.js}"></script>
+	  	<script type="text/javascript" th:src="@{/templates/MDBootstrap/js/bootstrap.js}"></script>
+	  	<script type="text/javascript" th:src="@{/templates/MDBootstrap/js/mdb.js}"></script>
+	  	<script type="text/javascript">
+	    	new WOW().init();
+	  	</script>
     </th:block>
 </head>
 </html>

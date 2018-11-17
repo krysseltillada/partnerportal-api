@@ -2,100 +2,91 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
     <head>
-
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-
-        <title>Sign up</title>
-
+    	<meta charset="utf-8">
+  		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  		<meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Sign up - PartnerPortal Open API</title>
         <th:block th:include="common/css :: cssFiles" />
-
-        <style type="text/css">
-            body {
-                background-color: white;
-            }
-            body > .grid {
-                height: 100%;
-            }
-            .image {
-                margin-top: -100px;
-            }
-            .column {
-                max-width: 450px;
-            }
-        </style>
-
+        
     </head>
     <body>
-            <div class="ui middle aligned center aligned grid">
-                <div class="column">
-                    <h2 class="ui teal image header">
-                        <img th:src="@{/templates/SemanticUI/components/assets/images/logo.png}" class="image" style="margin-bottom: 20px;">
-                        PartnerPortal Open API sign up
-                    </h2>
-                    <form th:action="@{/signUp}" method="post" th:object="${apiConsumer}" class="ui large form">
-                        <div class="ui stacked segment">
-
-                            <h4 class="ui dividing header">Login details</h4>
-
-                            <div class="field">
-                                <label style="text-align: left;">email</label>
-                                <input type="text" th:field="*{username}" placeholder="email">
-                                <small style="color: red"
+            
+		<!-- Material form register -->
+		<div class="container mt-5 d-flex justify-content-center">
+			<div class="card h-50">
+			
+			    <h5 class="card-header info-color white-text text-center py-4">
+			        <strong>Sign up - PartnerPortal Open API</strong>
+			    </h5>
+			
+			    <!--Card content-->
+			    <div class="card-body px-lg-5 pt-0">
+			
+			        <!-- Form -->
+			        <form class="text-center" method="post" th:object="${apiConsumer}"  style="color: #757575;">
+			
+			            <div class="form-row">
+			                <div class="col">
+			                    <!-- First name -->
+			                    <div class="md-form">
+			                        <input type="email" th:field="*{username}" id="email" class="form-control">
+			                        <label for="email">Email</label>
+			                        <small style="color: red"
                                        th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>
-                            </div>
-                            <div class="field">
-                                <label style="text-align: left;">Password</label>
-                                <input type="password" th:field="*{password}" placeholder="password">
-                                <small style="color: red"
+			                    </div>
+			                </div>
+			                <div class="col">
+			                    <!-- Last name -->
+			                    <div class="md-form">
+			                        <input type="password" th:field="*{password}" id="password" class="form-control">
+			                        <label for="password">Password</label>
+			                        <small style="color: red"
                                        th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
-                            </div>
-                            <div class="field">
-                                <label style="text-align: left;">Contact No</label>
-                                <input type="text" th:field="*{contactDetails.contactNo}" placeholder="contact no">
-                                <small style="color: red"
+			                    </div>
+			                </div>
+			            </div>
+			
+			            <!-- E-mail -->
+			            <div class="md-form mt-0">
+			                <input type="text" id="contactNumber"  th:field="*{contactDetails.contactNo}" class="form-control">
+			                <label for="contactNumber">Contact Number</label>
+			                <small style="color: red"
                                        th:if="${#fields.hasErrors('contactDetails.contactNo')}" th:errors="*{contactDetails.contactNo}"></small>
-                            </div>
-
-                            <h4 class="ui dividing header">Company and store info</h4>
-
-                            <div class="field">
-                                <label style="text-align: left;">Company Name</label>
-                                <input type="text" th:field="*{companyDetails.companyName}" placeholder="company name">
-                                <small style="color: red"
+			            </div>
+						<h4>Company and store info</h4>
+			            <!-- Company Name -->
+			            <div class="md-form">
+			                <input type="text" id="companyName" class="form-control" th:field="*{companyDetails.companyName}" aria-describedby="materialRegisterFormPasswordHelpBlock">
+			                <label for="companyName">Company Name</label>
+			                <small style="color: red"
                                        th:if="${#fields.hasErrors('companyDetails.companyName')}" th:errors="*{companyDetails.companyName}"></small>
-                            </div>
-                            <div class="field">
-                                <label style="text-align: left;">Store name</label>
-                                <input type="text" th:field="*{store.storeName}" placeholder="store name">
-                                <small style="color: red"
+			            </div>
+			
+			            <!-- Phone number -->
+			            <div class="md-form">
+			                <input type="text" id="storeName" class="form-control" aria-describedby="materialRegisterFormPhoneHelpBlock">
+			                <label for="storeName">Store Name</label>
+			                <small style="color: red"
                                        th:if="${#fields.hasErrors('store.storeName')}" th:errors="*{store.storeName}"></small>
-                            </div>
+			            </div>
+			
+			            <!-- Sign up button -->
+			            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Sign up</button>
 
-                            <button type="submit" class="ui fluid large primary button submit">Sign up</button>
-                        </div>
-
-                        <div th:if="${param.error != null}" class="ui error message" style="display: block;">
-                            Wrong email or password.
-                        </div>
-
-                        <div th:if="${error != null}" class="ui error message" style="display: block;">
-                            <span th:text="${error}"></span>
-                        </div>
-
-            <div class="ui error message"></div>
-
-                    </form>
-
-                    <div class="ui message">
-                        Already have an account? <a th:href="@{/login}">Sign in</a>
-                    </div>
-                </div>
-            </div>
-
-            <th:block th:include="common/js :: javascriptFiles" />
-
+			            <hr>
+			
+			            <!-- Terms of service -->
+			            <p>Already have an account? <a th:href="@{/}">Sign in</a></p>
+			
+			        </form>
+			        <!-- Form -->
+			
+			    </div>
+			
+			</div>
+		</div>
+			<!-- Material form register -->
+        <th:block th:include="common/js :: javascriptFiles" />
     </body>
 
 </html>
