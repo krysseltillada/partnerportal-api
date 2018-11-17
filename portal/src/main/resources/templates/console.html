@@ -6,33 +6,101 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head>
         <title>Console</title>
+        <link rel="stylesheet" th:href="@{/templates/MDBootstrap/DataTables/css/dataTables.bootstrap4.min.css}">
+        <link rel="stylesheet" th:href="@{/templates/MDBootstrap/DataTables/datatables.min.css}">
+        <link rel="stylesheet" th:href="@{/templates/MDBootstrap/DataTables/datatables.css}">
     </head>
     <body>
     	<th:block layout:fragment="content">
-    		<div class="container mt-5 d-flex justify-content-center">
-			<!-- Default form contact -->
-		<form th:action="@{/console}" method="post" th:object="${application}" class="text-center border border-light p-5">
-
-    		<p class="h4 mb-4">Create Application</p>
-
-    <!-- Name -->
-    <input type="text" th:field="*{applicationName}" class="form-control" placeholder="Application Name">
-    <small style="color: red" th:if="${#fields.hasErrors('applicationName')}"  th:errors="*{applicationName}"></small>
-	<br><br>
-    <!-- Subject -->
-    <label>Application Type</label>
-    <select class="browser-default custom-select mb-4" th:field="*{applicationType}">
-        <option value="WEB" selected>Web</option>
-        <option value="DESKTOP">Desktop</option>
-        <option value="MOBILE">Mobile</option>
-    </select>
-
-    <!-- Send button -->
-    <button class="btn btn-info btn-block" type="submit">Save Application</button>
-
-</form>
-<!-- Default form contact -->
+    	<div class="container">
+    	
+    	<hr class="my-5">
+    	<div class="row">
+	    	<div class="col-md-6">
+				<h4 class="m-0">Your User ID : <span th:text="${userId}"></span></h4>
+	    	</div>
+	    	<div class="col-md-6">
+		    	<button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#basicExampleModal">
+				  Create Application
+				</button>
+	    	</div>
+		
+    	</div>
+    	<hr>	
+    		<table id="example" class="display compact" style="width:100%">
+        <thead>
+            <tr>
+                <th>Application Name</th>
+                <th>Application Type</th>
+                <th>API Key</th>
+                <th>Delete?</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="app : ${applications}">
+                <td th:text="${app.applicationName}"></td>
+                <td th:text="${app.applicationType}"></td>
+                <td th:text="${app.applicationKey}"></td>
+                <td>
+					<form th:action="@{'/delete-application/'+${app.applicationId}}" method="post">
+						<button type="submit" class="btn btn-sm btn-danger" ripple-radius>Delete</button>
+					</form>
+				</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Application Name</th>
+                <th>Application Type</th>
+                <th>API Key</th>
+                <th>Delete?</th>
+            </tr>
+        </tfoot>
+    </table>
+    </div>
+    
+<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <form th:action="@{/console}" method="post" th:object="${application}" class="text-center border border-light p-5">
+  
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		
+		    		<p class="h4 mb-4">Create Application</p>
+		
+		    <!-- Name -->
+		    <input type="text" th:field="*{applicationName}" class="form-control" placeholder="Application Name">
+		    <small style="color: red" th:if="${#fields.hasErrors('applicationName')}"  th:errors="*{applicationName}"></small>
+			<br><br>
+		    <!-- Subject -->
+		    <label>Application Type</label>
+		    <select class="browser-default custom-select mb-4" th:field="*{applicationType}">
+		        <option value="WEB" selected>Web</option>
+		        <option value="DESKTOP">Desktop</option>
+		        <option value="MOBILE">Mobile</option>
+		    </select>
+		
+		    <!-- Send button -->
+		    
+		
+		
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button class="btn btn-info" type="submit">Save Application</button>
+      </div>
+      
+    </div>
+  </div>
+  </form>
 </div>
+		
   		</th:block>
     </body>
 

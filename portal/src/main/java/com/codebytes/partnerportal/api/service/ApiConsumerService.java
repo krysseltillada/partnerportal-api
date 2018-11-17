@@ -9,4 +9,5 @@ public interface ApiConsumerService
     ApiConsumer getApiConsumerByUsername(String username);
     void registerApiConsumer(ApiConsumer apiConsumer);
     boolean isEmailExist(String username);
+    void save(ApiConsumer consumer);
 }

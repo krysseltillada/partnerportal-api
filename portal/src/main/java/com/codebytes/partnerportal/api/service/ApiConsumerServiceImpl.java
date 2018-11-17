@@ -36,6 +36,11 @@ public class ApiConsumerServiceImpl implements ApiConsumerService
 	public boolean isEmailExist(String username) {
         return apiConsumerRepository.getApiConsumerByUsername(username) == null? false : true;
 	}
+
+	@Override
+	public void save(ApiConsumer consumer) {
+		apiConsumerRepository.save(consumer);
+	}
     
     
 }
