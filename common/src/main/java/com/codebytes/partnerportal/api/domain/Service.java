@@ -14,6 +14,8 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,9 +42,10 @@ public class Service
     @OneToOne
     private Category category;
 
-    @Type(type="MoneyUserType")
-    @Column(name = "price")
-    private Money price;
+    private double price;
+
+    @Enumerated(EnumType.STRING)
+    private DiscountType discountType;
 
     @Embedded
     private Discount discount;

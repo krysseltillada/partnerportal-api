@@ -20,6 +20,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,6 +37,8 @@ public class Product
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long productId;
 
+    private long storeId;
+
     private String sku;
     private String name;
     private String brand;
@@ -44,18 +47,13 @@ public class Product
 
     private int quantity;
 
-    @OneToOne
-    private Category category;
-
-    @Embedded
-    private ProductDimension productDimension;
-
-    @Type(type="MoneyUserType")
-    @Column(name = "price")
-    private Money price;
+    private double price;
 
     @Enumerated(EnumType.STRING)
     private DiscountType discountType;
+
+    @Embedded
+    private Discount discount;
 
     private String mainImage;
 

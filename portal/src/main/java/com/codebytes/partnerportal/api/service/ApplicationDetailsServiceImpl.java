@@ -2,6 +2,7 @@ package com.codebytes.partnerportal.api.service;
 
 import java.util.List;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class ApplicationDetailsServiceImpl implements ApplicationDetailsService{
 
 	@Override
 	public void encryptKey(ApplicationDetails application, String username) {
-		application.setApplicationKey(encoder.encode(username));
+		application.setApplicationKey(BCrypt.hashpw(username, BCrypt.gensalt(12)));
 	}
 
 	@Override

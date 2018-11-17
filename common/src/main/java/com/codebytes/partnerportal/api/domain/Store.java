@@ -1,5 +1,6 @@
 package com.codebytes.partnerportal.api.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -34,9 +35,11 @@ public class Store
 
     private String description;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)
     private List<Product> productList;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)
     private List<Service> serviceList;
 
