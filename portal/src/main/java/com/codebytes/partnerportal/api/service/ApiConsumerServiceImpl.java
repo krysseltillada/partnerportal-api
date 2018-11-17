@@ -24,19 +24,18 @@ public class ApiConsumerServiceImpl implements ApiConsumerService
     @Override
     public void registerApiConsumer(ApiConsumer apiConsumer)
     {
-        ApiConsumer existingApiConsumer =
-                apiConsumerRepository.getApiConsumerByUsername(apiConsumer.getContactDetails().getEmailAddress());
-
-        if(existingApiConsumer != null) {
-            throw new RuntimeException("existing user");
-        }
-
         apiConsumer.getContactDetails().setEmailAddress(apiConsumer.getUsername());
         apiConsumer.setPassword(passwordEncoder.encode(apiConsumer.getPassword()));
         apiConsumer.setEnabled(true);
         apiConsumer.setRole("CONSUMER");
 
         apiConsumerRepository.save(apiConsumer);
-
     }
+
+	@Override
+	public boolean isEmailExist(String username) {
+        return apiConsumerRepository.getApiConsumerByUsername(username) == null? false : true;
+	}
+    
+    
 }

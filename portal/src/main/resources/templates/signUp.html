@@ -7,7 +7,6 @@
   		<meta http-equiv="x-ua-compatible" content="ie=edge">
         <title>Sign up - PartnerPortal Open API</title>
         <th:block th:include="common/css :: cssFiles" />
-        
     </head>
     <body>
             
@@ -23,7 +22,7 @@
 			    <div class="card-body px-lg-5 pt-0">
 			
 			        <!-- Form -->
-			        <form class="text-center" method="post" th:object="${apiConsumer}"  style="color: #757575;">
+			        <form class="text-center" th:action="@{/signUp}" method="post" th:object="${apiConsumer}"  style="color: #757575;">
 			
 			            <div class="form-row">
 			                <div class="col">
@@ -64,11 +63,15 @@
 			
 			            <!-- Phone number -->
 			            <div class="md-form">
-			                <input type="text" id="storeName" class="form-control" aria-describedby="materialRegisterFormPhoneHelpBlock">
+			                <input type="text" id="storeName" class="form-control" th:field="*{store.storeName}" aria-describedby="materialRegisterFormPhoneHelpBlock">
 			                <label for="storeName">Store Name</label>
 			                <small style="color: red"
                                        th:if="${#fields.hasErrors('store.storeName')}" th:errors="*{store.storeName}"></small>
 			            </div>
+
+                        <div th:if="${error != null}" class="red-text" style="display: block;">
+                            <span th:text="${error}"></span>
+                        </div>
 			
 			            <!-- Sign up button -->
 			            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Sign up</button>

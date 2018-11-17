@@ -2,7 +2,8 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{common/template}">
+      layout:decorate="~{common/template}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head>
         <title>Home</title>
     </head>
@@ -40,9 +41,10 @@
 		
 		          <!--Grid column-->
 		          <div class="col-md-6 col-xl-5 mb-4">
-		
+		          	<img th:src="@{/images/open-platform-api.svg}" sec:authorize="isAuthenticated()" class="img-fluid"/>
+					
 		            <!--Card-->
-		            <div class="card pt-4 pb-3">
+		            <div class="card pt-4 pb-3" sec:authorize="isAnonymous()">
 		
 		              <!--Card content-->
 		              <div class="card-body">
@@ -68,6 +70,10 @@
 		                  </div>
 		                  	<div th:if="${param.error != null}" class="red-text text-center" style="display: block;">
                             	Wrong email or password.
+                        	</div>
+                        	
+                        	<div th:if="${param.success != null}" class="green-text text-center"  style="display: block;">
+                            	You can know register your account.
                         	</div>
 							<br>
 		                  <div class="text-center">

@@ -44,15 +44,15 @@ public class SignUpController
         }
 
         System.out.println(apiConsumer);
-
-        try
-        {
-            apiConsumerService.registerApiConsumer(apiConsumer);
-        } catch (Exception ex) {
+        
+        if(apiConsumerService.isEmailExist(apiConsumer.getUsername())){
             model.addAttribute("error", "existing user");
             return "signUp";
         }
-
-        return "signUp";
+        
+        apiConsumerService.registerApiConsumer(apiConsumer);
+        
+    	
+        return "redirect:/?success";
     }
 }
