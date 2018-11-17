@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+        <title>Login</title>
+
+        <th:block th:include="common/css :: cssFiles" />
+
+        <style type="text/css">
+            body {
+                background-color: white;
+            }
+            body > .grid {
+                height: 100%;
+            }
+            .image {
+                margin-top: -100px;
+            }
+            .column {
+                max-width: 450px;
+            }
+        </style>
+    </head>
+    <body>
+            <div class="ui middle aligned center aligned grid">
+                <div class="column">
+                    <h2 class="ui teal image header">
+                        <img th:src="@{/templates/SemanticUI/components/assets/images/logo.png}" class="image" style="margin-bottom: 20px;">
+                        PartnerPortal Open API login
+                    </h2>
+                    <form th:action="@{/login}" method="post" class="ui large form">
+                        <div class="ui stacked segment">
+                            <div class="field">
+                                <div class="ui left icon input">
+                                    <i class="user icon"></i>
+                                    <input type="text" name="username" placeholder="E-mail address" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui left icon input">
+                                    <i class="lock icon"></i>
+                                    <input type="password" name="password" placeholder="Password" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="ui fluid large primary button submit">Login</button>
+                        </div>
+
+                        <div th:if="${param.error != null}" class="ui error message" style="display: block;">
+                            Wrong email or password.
+                        </div>
+
+                        <div class="ui error message"></div>
+
+                    </form>
+
+                    <div class="ui message">
+                        New user? <a th:href="@{/signUp}">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+            <th:block th:include="common/js :: javascriptFiles" />
+
+    </body>
+
+</html>

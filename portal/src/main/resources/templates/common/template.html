@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <head>
+        <!-- Standard Meta -->
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <title layout:title-pattern="$LAYOUT_TITLE $CONTENT_TITLE">PartnerPortal</title>
+        <th:block th:include="common/css :: cssFiles" />
+    </head>
+
+    <body>
+        <th:block layout:fragment="content" />
+        <th:block th:include="common/js :: javascriptFiles" />
+    </body>
+
+</html>

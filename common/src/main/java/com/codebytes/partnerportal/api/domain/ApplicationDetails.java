@@ -1,6 +1,7 @@
 package com.codebytes.partnerportal.api.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -13,8 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@AllArgsConstructor
-@Getter
+@Data
 @EqualsAndHashCode
 @ToString
 @Log

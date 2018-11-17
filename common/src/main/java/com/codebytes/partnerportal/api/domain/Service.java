@@ -1,6 +1,7 @@
 package com.codebytes.partnerportal.api.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -20,8 +21,7 @@ import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@AllArgsConstructor
-@Getter
+@Data
 @EqualsAndHashCode
 @ToString
 @Log

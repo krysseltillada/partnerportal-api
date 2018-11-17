@@ -1,6 +1,7 @@
 package com.codebytes.partnerportal.api.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -16,11 +17,10 @@ import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
-@Log
-@AllArgsConstructor
-@Getter
-@ToString
+@Data
 @EqualsAndHashCode
+@ToString
+@Log
 @Entity
 public class Category
 {

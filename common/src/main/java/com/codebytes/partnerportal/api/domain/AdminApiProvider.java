@@ -1,15 +1,14 @@
 package com.codebytes.partnerportal.api.domain;
 
-import lombok.AllArgsConstructor;
+
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.java.Log;
 
 import javax.persistence.Entity;
 
-@AllArgsConstructor
-@Getter
+@Data
 @EqualsAndHashCode
 @ToString
 @Log
