@@ -1,5 +1,6 @@
 package com.codebytes.partnerportal.api.rest;
 
+import com.codebytes.partnerportal.api.domain.ApiConsumer;
 import com.codebytes.partnerportal.api.domain.Product;
 import com.codebytes.partnerportal.api.domain.rest.ResponseStatus;
 import com.codebytes.partnerportal.api.domain.rest.product.CreateProductRequest;
@@ -12,10 +13,13 @@ import com.codebytes.partnerportal.api.domain.rest.product.GetProductByIdRequest
 import com.codebytes.partnerportal.api.domain.rest.product.GetProductByIdResponse;
 import com.codebytes.partnerportal.api.domain.rest.product.UpdateProductByIdRequest;
 import com.codebytes.partnerportal.api.domain.rest.product.UpdateProductByIdResponse;
+import com.codebytes.partnerportal.api.rest.repository.ApiConsumerRepository;
+import com.codebytes.partnerportal.api.rest.repository.ApplicationDetailsRepository;
 import com.codebytes.partnerportal.api.rest.repository.ProductRepository;
 import com.codebytes.partnerportal.api.rest.repository.StoreRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.PageRequest;
@@ -39,6 +43,9 @@ public class ProductController
     @Autowired
     private StoreRepository mStoreRepository;
 
+    @Autowired
+    private AuthenticationComponent authenticationComponent;
+
     @ApiOperation(value = "Create a product",
                   response = CreateProductResponse.class,
                   produces = "application/json", protocols = "http/https")
@@ -46,6 +53,24 @@ public class ProductController
     public @ResponseBody
     CreateProductResponse createProduct(@RequestBody CreateProductRequest createProductRequest) {
         System.out.println(createProductRequest);
+
+        CreateProductResponse createProductResponse = new CreateProductResponse();
+
+        if(!authenticationComponent.validateApiKey(createProductRequest.getApiKey(), createProductRequest.getUserId())) {
+            createProductResponse.setApiKey(createProductRequest.getApiKey());
+            createProductResponse.setAppId(createProductRequest.getAppId());
+            createProductResponse.setUserId(createProductRequest.getUserId());
+            createProductResponse.setResponseDateTime(LocalDateTime.now());
+
+            ResponseStatus responseStatus = new ResponseStatus();
+
+            responseStatus.setStatus("ERROR");
+            responseStatus.setMessage("Invalid API Key");
+
+            createProductResponse.setMResponseStatus(responseStatus);
+
+            return createProductResponse;
+        }
 
         Product product = new Product();
 
@@ -61,8 +86,6 @@ public class ProductController
         product.setPrice(createProductRequest.getPrice());
         product.setQuantity(createProductRequest.getQuantity());
         product.setDateCreated(LocalDateTime.now());
-
-        CreateProductResponse createProductResponse = new CreateProductResponse();
 
         try {
             productRepository.save(product);
@@ -106,6 +129,22 @@ public class ProductController
     GetAllProductResponse getAllProduct(@RequestBody GetAllProductRequest getAllProductRequest) {
         GetAllProductResponse getAllProductResponse = new GetAllProductResponse();
 
+        if(!authenticationComponent.validateApiKey(getAllProductRequest.getApiKey(), getAllProductRequest.getUserId())) {
+            getAllProductResponse.setApiKey(getAllProductRequest.getApiKey());
+            getAllProductResponse.setAppId(getAllProductRequest.getAppId());
+            getAllProductResponse.setUserId(getAllProductRequest.getUserId());
+            getAllProductResponse.setResponseDateTime(LocalDateTime.now());
+
+            ResponseStatus responseStatus = new ResponseStatus();
+
+            responseStatus.setStatus("ERROR");
+            responseStatus.setMessage("Invalid API Key");
+
+            getAllProductResponse.setMResponseStatus(responseStatus);
+
+            return getAllProductResponse;
+        }
+
         getAllProductResponse.setAppId(getAllProductRequest.getAppId());
         getAllProductResponse.setApiKey(getAllProductRequest.getApiKey());
         getAllProductResponse.setUserId(getAllProductRequest.getUserId());
@@ -134,6 +173,22 @@ public class ProductController
                                                   GetProductByIdRequest getProductByIdRequest) {
         GetProductByIdResponse getProductByIdResponse = new GetProductByIdResponse();
 
+        if(!authenticationComponent.validateApiKey(getProductByIdRequest.getApiKey(), getProductByIdRequest.getUserId())) {
+            getProductByIdResponse.setApiKey(getProductByIdRequest.getApiKey());
+            getProductByIdResponse.setAppId(getProductByIdRequest.getAppId());
+            getProductByIdResponse.setUserId(getProductByIdRequest.getUserId());
+            getProductByIdResponse.setResponseDateTime(LocalDateTime.now());
+
+            ResponseStatus responseStatus = new ResponseStatus();
+
+            responseStatus.setStatus("ERROR");
+            responseStatus.setMessage("Invalid API Key");
+
+            getProductByIdResponse.setMResponseStatus(responseStatus);
+
+            return getProductByIdResponse;
+        }
+
         getProductByIdResponse.setAppId(getProductByIdRequest.getAppId());
         getProductByIdResponse.setApiKey(getProductByIdRequest.getApiKey());
         getProductByIdResponse.setUserId(getProductByIdRequest.getUserId());
@@ -158,12 +213,28 @@ public class ProductController
     @DeleteMapping("/product/delete")
     public @ResponseBody
     DeleteProductByIdResponse deleteProductById(@RequestBody DeleteProductByIdRequest deleteProductByIdRequest) {
-        DeleteProductByIdResponse getProductByIdResponse = new DeleteProductByIdResponse();
+        DeleteProductByIdResponse deleteProductByIdResponse = new DeleteProductByIdResponse();
 
-        getProductByIdResponse.setAppId(deleteProductByIdRequest.getAppId());
-        getProductByIdResponse.setApiKey(deleteProductByIdRequest.getApiKey());
-        getProductByIdResponse.setUserId(deleteProductByIdRequest.getUserId());
-        getProductByIdResponse.setResponseDateTime(LocalDateTime.now());
+        if(!authenticationComponent.validateApiKey(deleteProductByIdRequest.getApiKey(), deleteProductByIdRequest.getUserId())) {
+            deleteProductByIdResponse.setApiKey(deleteProductByIdRequest.getApiKey());
+            deleteProductByIdResponse.setAppId(deleteProductByIdRequest.getAppId());
+            deleteProductByIdResponse.setUserId(deleteProductByIdRequest.getUserId());
+            deleteProductByIdResponse.setResponseDateTime(LocalDateTime.now());
+
+            ResponseStatus responseStatus = new ResponseStatus();
+
+            responseStatus.setStatus("ERROR");
+            responseStatus.setMessage("Invalid API Key");
+
+            deleteProductByIdResponse.setMResponseStatus(responseStatus);
+
+            return deleteProductByIdResponse;
+        }
+
+        deleteProductByIdResponse.setAppId(deleteProductByIdRequest.getAppId());
+        deleteProductByIdResponse.setApiKey(deleteProductByIdRequest.getApiKey());
+        deleteProductByIdResponse.setUserId(deleteProductByIdRequest.getUserId());
+        deleteProductByIdResponse.setResponseDateTime(LocalDateTime.now());
 
         ResponseStatus responseStatus = new ResponseStatus();
 
@@ -172,9 +243,9 @@ public class ProductController
         responseStatus.setStatus("SUCCESS");
         responseStatus.setMessage("Product id " + deleteProductByIdRequest.getProductId() + " is Deleted");
 
-        getProductByIdResponse.setMResponseStatus(responseStatus);
+        deleteProductByIdResponse.setMResponseStatus(responseStatus);
 
-        return getProductByIdResponse;
+        return deleteProductByIdResponse;
     }
 
     @ApiOperation(value = "Updates a product by a product Id",
@@ -185,6 +256,22 @@ public class ProductController
     UpdateProductByIdResponse updateProduct(@RequestBody UpdateProductByIdRequest updateProductByIdRequest) {
 
         UpdateProductByIdResponse updateProductByIdResponse = new UpdateProductByIdResponse();
+
+        if(!authenticationComponent.validateApiKey(updateProductByIdRequest.getApiKey(), updateProductByIdRequest.getUserId())) {
+            updateProductByIdResponse.setApiKey(updateProductByIdRequest.getApiKey());
+            updateProductByIdResponse.setAppId(updateProductByIdRequest.getAppId());
+            updateProductByIdResponse.setUserId(updateProductByIdRequest.getUserId());
+            updateProductByIdResponse.setResponseDateTime(LocalDateTime.now());
+
+            ResponseStatus responseStatus = new ResponseStatus();
+
+            responseStatus.setStatus("ERROR");
+            responseStatus.setMessage("Invalid API Key");
+
+            updateProductByIdResponse.setMResponseStatus(responseStatus);
+
+            return updateProductByIdResponse;
+        }
 
         updateProductByIdResponse.setAppId(updateProductByIdRequest.getAppId());
         updateProductByIdResponse.setApiKey(updateProductByIdRequest.getApiKey());

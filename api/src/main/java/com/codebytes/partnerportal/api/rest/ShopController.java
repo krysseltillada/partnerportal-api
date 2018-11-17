@@ -24,6 +24,9 @@ public class ShopController
     @Autowired
     private ApiConsumerRepository apiConsumerRepository;
 
+    @Autowired
+    private AuthenticationComponent authenticationComponent;
+
     @ApiOperation(value = "Gets store info by user id",
                   response = GetStoreInfoByUserIdResponse.class,
                   produces = "application/json", protocols = "http/https")
@@ -31,6 +34,22 @@ public class ShopController
     @ResponseBody
     GetStoreInfoByUserIdResponse getStoreInfoByUserId (@RequestBody GetStoreInfoByUserIdRequest getStoreInfoByUserIdRequest) {
         GetStoreInfoByUserIdResponse getStoreInfoByUserIdResponse = new GetStoreInfoByUserIdResponse();
+
+        if(!authenticationComponent.validateApiKey(getStoreInfoByUserIdRequest.getApiKey(), getStoreInfoByUserIdRequest.getUserId())) {
+            getStoreInfoByUserIdResponse.setApiKey(getStoreInfoByUserIdRequest.getApiKey());
+            getStoreInfoByUserIdResponse.setAppId(getStoreInfoByUserIdRequest.getAppId());
+            getStoreInfoByUserIdResponse.setUserId(getStoreInfoByUserIdRequest.getUserId());
+            getStoreInfoByUserIdResponse.setResponseDateTime(LocalDateTime.now());
+
+            ResponseStatus responseStatus = new ResponseStatus();
+
+            responseStatus.setStatus("ERROR");
+            responseStatus.setMessage("Invalid API Key");
+
+            getStoreInfoByUserIdResponse.setMResponseStatus(responseStatus);
+
+            return getStoreInfoByUserIdResponse;
+        }
 
         getStoreInfoByUserIdResponse.setAppId((getStoreInfoByUserIdRequest.getAppId()));
         getStoreInfoByUserIdResponse.setApiKey(getStoreInfoByUserIdRequest.getApiKey());
