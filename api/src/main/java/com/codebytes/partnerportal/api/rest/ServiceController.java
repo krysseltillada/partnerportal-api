@@ -5,6 +5,7 @@ import com.codebytes.partnerportal.api.domain.rest.ResponseStatus;
 import com.codebytes.partnerportal.api.domain.rest.product.CreateProductResponse;
 import com.codebytes.partnerportal.api.domain.rest.product.GetProductByIdResponse;
 import com.codebytes.partnerportal.api.domain.rest.service.CreateServiceRequest;
+import com.codebytes.partnerportal.api.domain.rest.service.CreateServiceResponse;
 import com.codebytes.partnerportal.api.domain.rest.service.DeleteServiceByIdRequest;
 import com.codebytes.partnerportal.api.domain.rest.service.DeleteServiceByIdResponse;
 import com.codebytes.partnerportal.api.domain.rest.service.GetAllServiceRequest;
@@ -13,9 +14,11 @@ import com.codebytes.partnerportal.api.domain.rest.service.GetServiceByIdRequest
 import com.codebytes.partnerportal.api.domain.rest.service.GetServiceByIdResponse;
 import com.codebytes.partnerportal.api.domain.rest.service.UpdateServiceByIdRequest;
 import com.codebytes.partnerportal.api.domain.rest.service.UpdateServiceByIdResponse;
+import com.codebytes.partnerportal.api.rest.repository.ApiConsumerRepository;
 import com.codebytes.partnerportal.api.rest.repository.ServiceRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -35,18 +38,37 @@ public class ServiceController
     @Autowired
     private ServiceRepository serviceRepository;
 
+    @Autowired
+    private AuthenticationComponent authenticationComponent;
+
     @ApiOperation(value = "Creates a service",
-                  response = CreateProductResponse.class,
+                  response = CreateServiceResponse.class,
                   produces = "application/json", protocols = "http/https")
     @PostMapping("/service/create")
     public @ResponseBody
-    CreateProductResponse createService(@RequestBody CreateServiceRequest createServiceRequest) {
+    CreateServiceResponse createService(@RequestBody CreateServiceRequest createServiceRequest) {
 
-        CreateProductResponse createProductResponse = new CreateProductResponse();
+        CreateServiceResponse createServiceResponse = new CreateServiceResponse();
 
-        createProductResponse.setAppId(createServiceRequest.getAppId());
-        createProductResponse.setApiKey(createServiceRequest.getApiKey());
-        createProductResponse.setUserId(createServiceRequest.getUserId());
+        if(!authenticationComponent.validateApiKey(createServiceRequest.getApiKey(), createServiceRequest.getUserId())) {
+            createServiceResponse.setApiKey(createServiceRequest.getApiKey());
+            createServiceResponse.setAppId(createServiceRequest.getAppId());
+            createServiceResponse.setUserId(createServiceRequest.getUserId());
+            createServiceResponse.setResponseDateTime(LocalDateTime.now());
+
+            ResponseStatus responseStatus = new ResponseStatus();
+
+            responseStatus.setStatus("ERROR");
+            responseStatus.setMessage("Invalid API Key");
+
+            createServiceResponse.setMResponseStatus(responseStatus);
+
+            return createServiceResponse;
+        }
+
+        createServiceResponse.setAppId(createServiceRequest.getAppId());
+        createServiceResponse.setApiKey(createServiceRequest.getApiKey());
+        createServiceResponse.setUserId(createServiceRequest.getUserId());
 
         Service service = new Service();
 
@@ -72,10 +94,10 @@ public class ServiceController
         responseStatus.setMessage("Service is posted.");
         responseStatus.setStatus("SUCCESS");
 
-        createProductResponse.setResponseDateTime(LocalDateTime.now());
-        createProductResponse.setMResponseStatus(responseStatus);
+        createServiceResponse.setResponseDateTime(LocalDateTime.now());
+        createServiceResponse.setMResponseStatus(responseStatus);
 
-        return createProductResponse;
+        return createServiceResponse;
     }
 
     @ApiOperation(value = "Deletes a service by id",
@@ -87,6 +109,22 @@ public class ServiceController
     deleteServiceById(@RequestBody DeleteServiceByIdRequest deleteServiceByIdRequest) {
 
         DeleteServiceByIdResponse deleteServiceByIdResponse = new DeleteServiceByIdResponse();
+
+        if(!authenticationComponent.validateApiKey(deleteServiceByIdRequest.getApiKey(), deleteServiceByIdRequest.getUserId())) {
+            deleteServiceByIdResponse.setApiKey(deleteServiceByIdRequest.getApiKey());
+            deleteServiceByIdResponse.setAppId(deleteServiceByIdRequest.getAppId());
+            deleteServiceByIdResponse.setUserId(deleteServiceByIdRequest.getUserId());
+            deleteServiceByIdResponse.setResponseDateTime(LocalDateTime.now());
+
+            ResponseStatus responseStatus = new ResponseStatus();
+
+            responseStatus.setStatus("ERROR");
+            responseStatus.setMessage("Invalid API Key");
+
+            deleteServiceByIdResponse.setMResponseStatus(responseStatus);
+
+            return deleteServiceByIdResponse;
+        }
 
         deleteServiceByIdResponse.setAppId(deleteServiceByIdRequest.getAppId());
         deleteServiceByIdResponse.setApiKey(deleteServiceByIdRequest.getApiKey());
@@ -113,6 +151,22 @@ public class ServiceController
     public GetAllServiceResponse getALLService(@RequestBody GetAllServiceRequest getAllServiceRequest) {
 
         GetAllServiceResponse getAllServiceResponse = new GetAllServiceResponse();
+
+        if(!authenticationComponent.validateApiKey(getAllServiceRequest.getApiKey(), getAllServiceRequest.getUserId())) {
+            getAllServiceResponse.setApiKey(getAllServiceRequest.getApiKey());
+            getAllServiceResponse.setAppId(getAllServiceRequest.getAppId());
+            getAllServiceResponse.setUserId(getAllServiceRequest.getUserId());
+            getAllServiceResponse.setResponseDateTime(LocalDateTime.now());
+
+            ResponseStatus responseStatus = new ResponseStatus();
+
+            responseStatus.setStatus("ERROR");
+            responseStatus.setMessage("Invalid API Key");
+
+            getAllServiceResponse.setMResponseStatus(responseStatus);
+
+            return getAllServiceResponse;
+        }
 
         getAllServiceResponse.setAppId(getAllServiceRequest.getAppId());
         getAllServiceResponse.setApiKey(getAllServiceRequest.getApiKey());
@@ -142,6 +196,22 @@ public class ServiceController
 
         GetServiceByIdResponse getServiceByIdResponse = new GetServiceByIdResponse();
 
+        if(!authenticationComponent.validateApiKey(getServiceByIdRequest.getApiKey(), getServiceByIdRequest.getUserId())) {
+            getServiceByIdResponse.setApiKey(getServiceByIdRequest.getApiKey());
+            getServiceByIdResponse.setAppId(getServiceByIdRequest.getAppId());
+            getServiceByIdResponse.setUserId(getServiceByIdRequest.getUserId());
+            getServiceByIdResponse.setResponseDateTime(LocalDateTime.now());
+
+            ResponseStatus responseStatus = new ResponseStatus();
+
+            responseStatus.setStatus("ERROR");
+            responseStatus.setMessage("Invalid API Key");
+
+            getServiceByIdResponse.setMResponseStatus(responseStatus);
+
+            return getServiceByIdResponse;
+        }
+
         getServiceByIdResponse.setAppId(getServiceByIdRequest.getAppId());
         getServiceByIdResponse.setApiKey(getServiceByIdRequest.getApiKey());
         getServiceByIdResponse.setUserId(getServiceByIdRequest.getUserId());
@@ -168,6 +238,22 @@ public class ServiceController
     UpdateServiceByIdResponse updateServiceById(@RequestBody UpdateServiceByIdRequest updateServiceByIdRequest) {
 
         UpdateServiceByIdResponse updateServiceByIdResponse = new UpdateServiceByIdResponse();
+
+        if(!authenticationComponent.validateApiKey(updateServiceByIdRequest.getApiKey(), updateServiceByIdRequest.getUserId())) {
+            updateServiceByIdResponse.setApiKey(updateServiceByIdRequest.getApiKey());
+            updateServiceByIdResponse.setAppId(updateServiceByIdRequest.getAppId());
+            updateServiceByIdResponse.setUserId(updateServiceByIdRequest.getUserId());
+            updateServiceByIdResponse.setResponseDateTime(LocalDateTime.now());
+
+            ResponseStatus responseStatus = new ResponseStatus();
+
+            responseStatus.setStatus("ERROR");
+            responseStatus.setMessage("Invalid API Key");
+
+            updateServiceByIdResponse.setMResponseStatus(responseStatus);
+
+            return updateServiceByIdResponse;
+        }
 
         updateServiceByIdResponse.setAppId(updateServiceByIdRequest.getAppId());
         updateServiceByIdResponse.setApiKey(updateServiceByIdRequest.getApiKey());
