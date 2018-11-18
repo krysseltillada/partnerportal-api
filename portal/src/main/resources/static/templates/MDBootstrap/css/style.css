@@ -24,10 +24,12 @@ body,
 
 /* Navbar animation */
 .navbar {
-  background-color: rgba(0, 0, 0, 0.3); }
+  background-color: rgba(0, 0, 0, 0.3);
+}
 
 .top-nav-collapse {
-  background-color: #1C2331; }
+  background-color: #1C2331;
+}
 
 /* Adding color to the Navbar on mobile */
 @media only screen and (max-width: 768px) {

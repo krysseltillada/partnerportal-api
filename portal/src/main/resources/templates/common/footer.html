@@ -1,20 +1,44 @@
-
-<html xmlns:th="http://www.thymeleaf.org"
-    	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 	<body>
 		<th:block th:fragment="footer">
 			<footer class="page-footer text-center font-small mt-4 wow fadeIn">
-			
-			
-			    
-			
-			    <!--Copyright-->
+				<div class="row" style="width: 100%; padding: 15px;">
+					<div class="col-12 col-md-4">
+						<div class="footer_group">
+							<div class="h5">Products</div>
+							<hr width="100%" style="background-color: white;" />
+
+							<p>Over 6 million developers, testers and operations teams use PartnerPortal products to deliver the world's best applications.</p>
+							<p><a class="explore_products" th:href="@{/}">Explore Partner Products</a></p>
+						</div>
+					</div>
+
+					<div class="col-12 col-md-4">
+						<div class="footer_group">
+							<div class="h5">Company</div>
+							<hr width="100%" style="background-color: white;" />
+
+							<p class="contact_details">About PartnerPortal</p>
+							<p class="contact_phone"><a th:href="@{/}">Careers</a></p>
+							<p class="contact_email"><a th:href="@{/}">Upcoming Events</a></p>
+						</div>
+					</div>
+
+					<div class="col-12 col-md-4">
+						<div class="footer_group">
+							<div class="h5">Contact Us</div>
+							<hr width="100%" style="background-color: white;" />
+
+							<p class="contact_phone"><a th:href="@{/}">+63 9675281187</a></p>
+							<p class="contact_email"><a th:href="@{/}">info@partnerportal.com</a></p>
+						</div>
+					</div>
+				</div>
+
 			    <div class="footer-copyright py-3">
 			      	PartnerPortal Open API Platform: <br>
 			      <a th:href="@{/}" target="_blank"> Copyright &copy; 2018 PartnerPortal. All rights reserved </a>
 			    </div>
-			    <!--/.Copyright-->
-			
 			  </footer>
   	</th:block>
   </body>
