@@ -91,7 +91,11 @@ public class ServiceController
 
         service.setDateCreated(LocalDateTime.now());
 
-        serviceRepository.save(service);
+        ApiConsumer apiConsumer = apiConsumerRepository.findById(createServiceRequest.getUserId()).get();
+
+        apiConsumer.getStore().getServiceList().add(service);
+
+        apiConsumerRepository.save(apiConsumer);
 
         ResponseStatus responseStatus = new ResponseStatus();
 

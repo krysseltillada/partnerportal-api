@@ -91,7 +91,12 @@ public class ProductController
         product.setDateCreated(LocalDateTime.now());
 
         try {
-            productRepository.save(product);
+
+            ApiConsumer apiConsumer = apiConsumerRepository.findById(createProductRequest.getUserId()).get();
+
+            apiConsumer.getStore().getProductList().add(product);
+
+            apiConsumerRepository.save(apiConsumer);
 
             createProductResponse.setApiKey(createProductRequest.getApiKey());
             createProductResponse.setAppId(createProductRequest.getAppId());
