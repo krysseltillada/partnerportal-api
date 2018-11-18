@@ -7,5 +7,5 @@ import com.codebytes.partnerportal.api.domain.ApplicationDetails;
 
 @Repository
 public interface ApplicationDetailsRepository extends CrudRepository<ApplicationDetails, Long>{
-
+	
 }

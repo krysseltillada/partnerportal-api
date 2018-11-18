@@ -9,9 +9,21 @@
 	  	<script type="text/javascript" th:src="@{/templates/MDBootstrap/js/mdb.min.js}"></script>
 	  	<script type="text/javascript" th:src="@{/templates/MDBootstrap/js/bootstrap.js}"></script>
 	  	<script type="text/javascript" th:src="@{/templates/MDBootstrap/js/mdb.js}"></script>
+		
+		<script type="text/javascript" th:src="@{/templates/MDBootstrap/DataTables/js/dataTables.bootstrap4.min.js}"></script>
+		<script type="text/javascript" th:src="@{/templates/MDBootstrap/DataTables/js/dataTables.bootstrap4.js}"></script>
+    	<script type="text/javascript" th:src="@{/templates/MDBootstrap/DataTables/datatables.js}"></script>
+		<script type="text/javascript" th:src="@{/templates/MDBootstrap/DataTables/datatables.min.js}"></script>
+		
 	  	<script type="text/javascript">
 	    	new WOW().init();
 	  	</script>
+	  	<script>
+		$(document).ready(function() {
+		    $('#example').DataTable({"ordering": false});
+		    
+		} );
+		</script>
     </th:block>
 </head>
 </html>
