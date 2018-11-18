@@ -1,5 +1,6 @@
 package com.codebytes.partnerportal.api.rest;
 
+import com.codebytes.partnerportal.api.domain.ApiConsumer;
 import com.codebytes.partnerportal.api.domain.Service;
 import com.codebytes.partnerportal.api.domain.rest.ResponseStatus;
 import com.codebytes.partnerportal.api.domain.rest.product.CreateProductResponse;
@@ -40,6 +41,9 @@ public class ServiceController
 
     @Autowired
     private AuthenticationComponent authenticationComponent;
+
+    @Autowired
+    private ApiConsumerRepository apiConsumerRepository;
 
     @ApiOperation(value = "Creates a service",
                   response = CreateServiceResponse.class,
@@ -143,7 +147,7 @@ public class ServiceController
         return deleteServiceByIdResponse;
     }
 
-    @ApiOperation(value = "Gets all service by pageNo and pageCount",
+    @ApiOperation(value = "Gets all service by user id(user's store)",
                   response = GetAllServiceResponse.class,
                   produces = "application/json", protocols = "http/https")
     @PostMapping("/service/getAll")
@@ -172,7 +176,9 @@ public class ServiceController
         getAllServiceResponse.setApiKey(getAllServiceRequest.getApiKey());
         getAllServiceResponse.setUserId(getAllServiceRequest.getUserId());
 
-        List<Service> serviceList = serviceRepository.findAll(new PageRequest(getAllServiceRequest.getPageNo(), getAllServiceRequest.getPageCount())).getContent();
+        ApiConsumer apiConsumer = apiConsumerRepository.findById(getAllServiceRequest.getUserId()).get();
+
+        List<Service> serviceList = apiConsumer.getStore().getServiceList();
 
         getAllServiceResponse.setServiceList(serviceList);
         getAllServiceResponse.setProductCount(serviceList.size());

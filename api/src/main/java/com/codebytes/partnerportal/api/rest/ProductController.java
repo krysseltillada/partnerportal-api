@@ -46,6 +46,9 @@ public class ProductController
     @Autowired
     private AuthenticationComponent authenticationComponent;
 
+    @Autowired
+    private ApiConsumerRepository apiConsumerRepository;
+
     @ApiOperation(value = "Create a product",
                   response = CreateProductResponse.class,
                   produces = "application/json", protocols = "http/https")
@@ -120,7 +123,7 @@ public class ProductController
         return createProductResponse;
     }
 
-    @ApiOperation(value = "Gets all the products by a pageNo and pageCount fields",
+    @ApiOperation(value = "Gets all the products by a user id(user's store)",
                   response = GetAllProductResponse.class,
                   produces = "application/json", protocols = "http/https")
     @PostMapping("/product/getAll")
@@ -150,7 +153,9 @@ public class ProductController
         getAllProductResponse.setUserId(getAllProductRequest.getUserId());
         getAllProductResponse.setResponseDateTime(LocalDateTime.now());
 
-        List<Product> productList = productRepository.findAll(new PageRequest(getAllProductRequest.getPageNo(), getAllProductRequest.getPageCount())).getContent();
+        ApiConsumer apiConsumer = apiConsumerRepository.findById(getAllProductRequest.getUserId()).get();
+
+        List<Product> productList = apiConsumer.getStore().getProductList();
 
         getAllProductResponse.setProductList(productList);
         getAllProductResponse.setProductCount(productList.size());

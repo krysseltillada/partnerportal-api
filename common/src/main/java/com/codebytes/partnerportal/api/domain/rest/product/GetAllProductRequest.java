@@ -10,6 +10,4 @@ import lombok.ToString;
 @ToString
 public class GetAllProductRequest extends RequestBase
 {
-    private int pageNo;
-    private int pageCount;
 }
