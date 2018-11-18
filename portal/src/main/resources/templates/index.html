@@ -32,7 +32,7 @@
 		
 		              <h6>Empowering E-Commerce through Applications</h6>
 		
-		            <a target="_blank" href="https://mdbootstrap.com/education/bootstrap/" class="btn btn-indigo btn-lg">Get Started
+		            <a target="_blank" th:href="@{/getStarted}" class="btn btn-indigo btn-lg">Get Started
 		              <i class="fa fa-graduation-cap ml-2"></i>
 		            </a>
 		
@@ -108,8 +108,68 @@
 		    <div class="container">
 		
 		      <hr class="my-5">
-		
-		      <!--Section: Main features & Quick Start-->
+
+				<section>
+
+					<h3 class="h3 text-center mb-5">About PartnerPortal Open API</h3>
+
+					<!--Grid row-->
+					<div class="row wow fadeIn">
+
+						<!--Grid column-->
+						<div class="col-lg-6 col-md-12 px-4">
+
+							<!--First row-->
+							<div class="row">
+								<div class="col-1 mr-3">
+									<i class="fa fa-code fa-2x indigo-text"></i>
+								</div>
+								<div class="col-10">
+									<h5 class="feature-title">Easy Integration</h5>
+									<p class="grey-text">We provide api platform services that integrates easily into your ecommerce application.</p>
+								</div>
+							</div>
+							<!--/First row-->
+
+							<div style="height:30px"></div>
+
+							<!--Second row-->
+							<div class="row">
+								<div class="col-1 mr-3">
+									<i class="fa fa-book fa-2x blue-text"></i>
+								</div>
+								<div class="col-10">
+									<h5 class="feature-title">Open Platform API</h5>
+									<p class="grey-text">Rich API endpoints for all the areas of e-commerce, like product, services, store, discounts management
+									</p>
+								</div>
+							</div>
+							<!--/Second row-->
+
+							<div style="height:30px"></div>
+
+							<!--Third row-->
+							<div class="row">
+								<div class="col-1 mr-3">
+									<i class="fa fa-graduation-cap fa-2x cyan-text"></i>
+								</div>
+								<div class="col-10">
+									<h5 class="feature-title">Rich Documentation</h5>
+									<p class="grey-text">Rich documentation and interactive console to get development a less effort</p>
+								</div>
+							</div>
+							<!--/Third row-->
+
+						</div>
+						<!--/Grid column-->
+
+						<div class="col-lg-6 col-md-12 px-4 text-center">
+							<img th:src="@{/images/open-platform-logo.svg}" width="75%" height="75%" class="img-fluid"/>
+						</div>
+					</div>
+					<!--/Grid row-->
+					<br>
+				</section> <!--Section: Main features & Quick Start-->
 		      <section>
 		
 		        <h3 class="h3 text-center mb-5">About PartnerPortal Open API</h3>

@@ -10,4 +10,7 @@ public class HomeController
     public String index() {
         return "index";
     }
+
+    @GetMapping("/getStarted")
+    public String getStarted() { return "getStarted"; }
 }
