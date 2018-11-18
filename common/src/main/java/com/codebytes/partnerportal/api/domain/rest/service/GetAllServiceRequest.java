@@ -11,6 +11,4 @@ import lombok.ToString;
 public class GetAllServiceRequest
         extends RequestBase
 {
-    private int pageNo;
-    private int pageCount;
 }

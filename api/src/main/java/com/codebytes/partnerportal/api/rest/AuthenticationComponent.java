@@ -24,7 +24,7 @@ public class AuthenticationComponent
                     return BCrypt.checkpw(username, apiKey);
                 }
             }
-            
+
             return false;
         } catch(RuntimeException e) {
             return false;
